@@ -1,0 +1,28 @@
+<script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+
+<script type="text/javascript">
+
+
+
+let apikey = "AIzaSyAQH0La7SnILjFaq0-1_q58_ymTCS_uG2Y";
+let keyword ="짱구는못말려";
+
+$.ajax({
+	url:'https://www.googleapis.com/youtube/v3/search',
+	type:'get',
+	dataType:'json',
+	data:{part:'snippet',key:apikey,q:keyword, maxResults:50,type:'video',videoEmbeddable:'true'},
+	success:function (data){
+		console.log(data);
+		 $.each(data.items, function(i, item) {
+			 thumbnail = item.snippet.thumbnails.medium.url; // 썸네일 이미지
+			 videoId = item.id.videoId;				 // 비디오 아이디	
+		});    
+	}
+});
+
+function v_link(videoId){
+    location.href='https://www.youtube.com/watch?v='+videoId;
+}
+
+</script>
