@@ -18,7 +18,7 @@
         <a href="#contents">MoonJin's Webpage</a>
     </div>
     <hr class="hidden" />
-    <form class="form-popup" id="LoginForm">
+    <form class="form-popup" id="LoginForm" action="/user/login" method="post">
         <div class="form-container">
           <h1>Login</h1>
       
@@ -40,6 +40,8 @@
                 <li class="current"><a href="mj_main.html">ABOUT ME</a></li>
                 <a id="loginbtn" href="#" class="myButton">login</a>
                 <a id="registerbtn" href="#" class="myButton">register</a>
+                <a id="profile" class="current" style=display:none;></a>
+			    <a id="logoutbtn" href="/user/logout" class="myButton" style=display:none;>logout</a>
             </ul>
             
             
@@ -67,4 +69,20 @@
     
 </body>
 <script src="./script.js"></script>
+<script>
+    var cookies=document.cookie;
+	console.log(cookies)
+	if (!cookies){
+		document.getElementById('registerbtn').style.display = 'inline-block'
+		document.getElementById('loginbtn').style.display = 'inline-block'
+		document.getElementById('logoutbtn').style.display = 'none'
+		document.getElementById('profile').style.display = 'none'
+	}else{
+		document.getElementById('registerbtn').style.display = "none"
+		document.getElementById('loginbtn').style.display = "none"
+		document.getElementById('logoutbtn').style.display = 'inline-block'
+		document.getElementById('profile').innerHTML = "cookies"
+		document.getElementById('profile').style.display = 'inline-block'
+	}
+</script>
 </html>

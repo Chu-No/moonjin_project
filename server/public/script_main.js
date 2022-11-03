@@ -10,6 +10,10 @@ window.onload = function (){
     movieArr=[]
 };
 
+document.getElementById("loginbtn").addEventListener("click", openForm);
+document.getElementById("registerbtn").addEventListener("click", openForm);
+document.getElementById("close_button").addEventListener("click", closeForm);
+
 function searchMovie(){
     $.ajax({
         //////content type 명시하지 않음
@@ -98,4 +102,13 @@ function deleteBookmark(selectedParentElement){
     renderMovie()
 
     movieArr=[]
+}
+
+function openForm() {
+    console.log(document.getElementById('LoginForm'))
+    document.getElementById('LoginForm').style.display = "block";
+}
+  
+function closeForm() {
+    document.getElementById('LoginForm').style.display = "none";
 }

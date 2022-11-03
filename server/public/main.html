@@ -12,13 +12,26 @@
 	<style type="text/css">
 
 	</style>
+	
 </head>
 <body>
 <div id="skipNav">
 	<a href="./mj_main.html">MoonJin's Webpage</a>
 </div>
 <hr class="hidden" />
-
+<form class="form-popup" id="LoginForm" action="/login" method="post">
+	<div class="form-container">
+	  <h1>Login</h1>
+  
+	  <input type="text" id="idInput" placeholder="Enter Email" name="email" required>
+  
+	  <input type="password" id="passwordInput" placeholder="Enter Password" name="psw" required>
+  
+	  <button type="submit" value="submit" class="btn" id="LoginActbtn">Login</button>
+	  <button type="button" class="btn" id="RegisterActbtn">Register</button>
+	  <button type="button" class="btn cancel" id="close_button">Close</button>
+	</div>
+</form>
 <div id="wrap">
 	<div id="header">
 		<h1 id="logo"><img src="./ljh.JPG" width="200" height="39" alt="MoonJin LOGO" /></h1>
@@ -26,6 +39,10 @@
 		<ul id="menu">
 			<li class="current"><a href="main.html">HOME</a></li>
 			<li><a href="mj_main.html">ABOUT ME</a></li>
+			<a id="loginbtn" href="#" class="myButton">login</a>
+            <a id="registerbtn" href="#" class="myButton">register</a>
+			<a id="profile" class="current" style=display:none;></a>
+			<a id="logoutbtn" href="/logout" class="myButton" style=display:none;>logout</a>
 		</ul>
 	</div>
     <hr class="hidden" />
@@ -42,4 +59,21 @@
 	<script src="./script_main.js"></script>
 </div>
 </body>
+<script>
+	var cookies=document.cookie;
+	console.log(cookies)
+	if (!cookies){
+		document.getElementById('registerbtn').style.display = 'inline-block'
+		document.getElementById('loginbtn').style.display = 'inline-block'
+		document.getElementById('logoutbtn').style.display = 'none'
+		document.getElementById('profile').style.display = 'none'
+	}else{
+		document.getElementById('registerbtn').style.display = "none"
+		document.getElementById('loginbtn').style.display = "none"
+		document.getElementById('logoutbtn').style.display = 'inline-block'
+		document.getElementById('profile').innerHTML = "cookies"
+		document.getElementById('profile').style.display = 'inline-block'
+	}
+</script>
+
 </html>

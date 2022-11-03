@@ -12,7 +12,6 @@ document.getElementById("loginbtn").addEventListener("click", openForm);
 document.getElementById("registerbtn").addEventListener("click", openForm);
 document.getElementById("close_button").addEventListener("click", closeForm);
 
-document.getElementById("LoginActbtn").addEventListener("click", loginAction);
 document.getElementById("RegisterActbtn").addEventListener("click", registerAction);
 
 searchform.addEventListener('click', (e)=>{
@@ -195,29 +194,6 @@ function closeForm() {
     document.getElementById('LoginForm').style.display = "none";
 }
 
-function loginAction(){
-    var email = $('#idInput').val()
-    var password = $('#passwordInput').val()
-
-    if(email.length==0||password.length==0){alert('아이디 혹은 비밀번호가 입력되지 않았습니다');}
-    else{
-        var registerData = {'Id':email,'Password':password};
-        $.ajax({
-            //////content type 명시하지 않음
-                  type: "get",
-                  url : "http://localhost:8000/login/register",
-                  data : registerData,
-                  success : function (data){
-                    console.log(data);
-                    alert('회원가입이 완료되었습니다');
-                  },
-                  error : function(e){
-                    alert('회원가입이 실패하였습니다');
-                  }
-        })
-    }
-}
-
 function registerAction(){
     var email = $('#idInput').val()
     var password = $('#passwordInput').val()
@@ -230,7 +206,7 @@ function registerAction(){
         $.ajax({
             //////content type 명시하지 않음
                   type: "post",
-                  url : "http://localhost:8000/register",
+                  url : "http://localhost:8000/user/register",
                   data : registerData,
                   success : function (data){
                     if (data == "성공"){

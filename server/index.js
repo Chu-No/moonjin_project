@@ -7,6 +7,8 @@ var router = express.Router();
 const PORT = process.env.PORT || 8000
 const app = express()
 
+const session = {}; //server.js 전역변수 선언
+
 // DB 연결
 const maria = require('./maria');
 maria.connect();
@@ -21,7 +23,21 @@ app.use('/public', express.static('public'));
 
 // 2. index.html로 리다이렉션
 app.get('/',(req,res)=>{
+  if (req.headers.cookie) {
+    console.log(req.headers.cookie);
+    const [, privateKey] = req.headers.cookie.split('=');
+    const userInfo = session[privateKey];
+    console.log(userInfo)
     res.redirect('/public/main.html');
+    // res.render('index.html', {
+    //   isLogin: true,
+    //   userInfo,
+    // });
+  } else {
+    res.redirect('/public/main.html');
+    // res.render('index.html', { isLogin: false });
+  }
+    
 });
 
 app.listen(PORT, () => {
@@ -119,7 +135,7 @@ app.post('/delete', function(req, res) {
   });
 });
 
-app.post('/register', function(req, res) {
+app.post('/user/register', function(req, res) {
   var query = "SELECT id FROM user where id='" + req.body['Id'] +"';"
   maria.query(query, function(err, rows, fields) {
     if (rows.length == 0){
@@ -137,6 +153,54 @@ app.post('/register', function(req, res) {
       res.send("중복ID")
     }
   });
+});
+
+app.post('/user/login', function(req, res) {
+  var id = req.body['email']
+  var pw = req.body['psw']
+
+  var query = "SELECT * FROM user where id='" + id +"';"
+  maria.query(query, function(err, rows) {
+    if (err) throw err;
+    else{
+      if(rows.length == 0){
+        console.log(rows)
+        console.log("아이디 틀림")
+        res.redirect("/")
+      }
+      else{
+        var salt = rows[0].id;
+        var password = rows[0].password;
+        console.log(salt)
+        if(pw === password){
+          console.log('로그인 성공')
+          const privateKey = Math.floor(Math.random() * 1000000000);
+          const user = {
+            Id : id,
+            Pwd : password
+          };
+          session[privateKey] = user;
+          res.setHeader('Set-Cookie', `connect.id=${privateKey}; path=/`);
+          res.redirect("/")
+        }
+        else{
+          console.log("로그인 실패")
+          res.redirect("/")
+        }
+      }
+    }
+  });
+});
+
+app.get('/user/logout', (req, res) => {
+  if (req.headers.cookie) {
+    const [, privateKey] = req.headers.cookie.split('=');
+    delete session[privateKey];
+    res.setHeader('Set-Cookie', 'connect.id=delete; Max-age=0; path=/');
+    res.redirect('/');
+  } else {
+    res.redirect('/user/login?msg=로그인부터 하라니까요?!');
+  }
 });
 
 module.exports = router;
