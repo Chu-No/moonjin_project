@@ -119,4 +119,24 @@ app.post('/delete', function(req, res) {
   });
 });
 
+app.post('/register', function(req, res) {
+  var query = "SELECT id FROM user where id='" + req.body['Id'] +"';"
+  maria.query(query, function(err, rows, fields) {
+    if (rows.length == 0){
+      var query_txt = 'INSERT INTO user(id,password) VALUES("'+req.body['Id']+'","'+req.body['Password']+'")'
+      maria.query(query_txt, function(err, rows, fields) {
+        if(!err) {
+          res.send("성공"); // responses send rows
+        } else {
+          console.log("err : " + err);
+          res.send(err);  // response send err
+        }
+      });
+    }
+    else{
+      res.send("중복ID")
+    }
+  });
+});
+
 module.exports = router;

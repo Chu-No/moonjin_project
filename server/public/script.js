@@ -1,4 +1,3 @@
-
 const searchform = document.getElementById('search_button')
 const searchInput = document.getElementById('search_input')
 const movieList = document.getElementById('movieList')
@@ -6,6 +5,15 @@ const movieList = document.getElementById('movieList')
 let movieArr=[]
 let dbArr=[]
 let keyword=""
+//정규 표현식
+const passwordRules = /^[A-Z]?(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/;
+
+document.getElementById("loginbtn").addEventListener("click", openForm);
+document.getElementById("registerbtn").addEventListener("click", openForm);
+document.getElementById("close_button").addEventListener("click", closeForm);
+
+document.getElementById("LoginActbtn").addEventListener("click", loginAction);
+document.getElementById("RegisterActbtn").addEventListener("click", registerAction);
 
 searchform.addEventListener('click', (e)=>{
 
@@ -55,7 +63,7 @@ function renderMovie(){
     var search_keyword = {'keyword':keyword}
     $.ajax({
         //////content type 명시하지 않음
-              type: "post",
+              type: "get",
               url : "http://localhost:8000/select/video_title",
               async: false,
               data : search_keyword,
@@ -70,9 +78,12 @@ function renderMovie(){
               error : function(e){
               }
     })
-    for (const a in movieArr){
-        console.log(dbArr.includes(movieArr[a].videoId))
-    }
+
+    isBookMark(movieArr)
+
+}
+
+function isBookMark(movieArr){
     const movieHtml = movieArr.map((movie) => {
         if (dbArr.includes(movie.videoId)){
             return `
@@ -109,7 +120,6 @@ function renderMovie(){
         }
     }).join('');
     movieList.innerHTML = movieHtml
-
 }
 
 movieList.addEventListener('click',(e) => {
@@ -175,9 +185,67 @@ function deleteBookmark(selectedParentElement){
     blink_star.style.display = 'inline-block'
 }
 
-
-function v_link(videoId){
-    var link='https://www.youtube.com/embed/'+videoId;
-    return link
+// 로그인 팝업
+function openForm() {
+    console.log(document.getElementById('LoginForm'))
+    document.getElementById('LoginForm').style.display = "block";
 }
-//youtube API key:AIzaSyAQH0La7SnILjFaq0-1_q58_ymTCS_uG2Y
+  
+function closeForm() {
+    document.getElementById('LoginForm').style.display = "none";
+}
+
+function loginAction(){
+    var email = $('#idInput').val()
+    var password = $('#passwordInput').val()
+
+    if(email.length==0||password.length==0){alert('아이디 혹은 비밀번호가 입력되지 않았습니다');}
+    else{
+        var registerData = {'Id':email,'Password':password};
+        $.ajax({
+            //////content type 명시하지 않음
+                  type: "get",
+                  url : "http://localhost:8000/login/register",
+                  data : registerData,
+                  success : function (data){
+                    console.log(data);
+                    alert('회원가입이 완료되었습니다');
+                  },
+                  error : function(e){
+                    alert('회원가입이 실패하였습니다');
+                  }
+        })
+    }
+}
+
+function registerAction(){
+    var email = $('#idInput').val()
+    var password = $('#passwordInput').val()
+    console.log(password)
+    console.log(passwordRules.test(password));
+    if(email.length==0||password.length==0){alert('아이디 혹은 비밀번호가 입력되지 않았습니다');}
+    else if(!passwordRules.test(password)){alert('비밀번호 조건이 틀렸습니다');}
+    else{
+        var registerData = {'Id':email,'Password':password};
+        $.ajax({
+            //////content type 명시하지 않음
+                  type: "post",
+                  url : "http://localhost:8000/register",
+                  data : registerData,
+                  success : function (data){
+                    if (data == "성공"){
+                        alert('회원가입이 완료되었습니다');
+                    }
+                    else if (data == "중복ID"){
+                        alert('중복된 아이디입니다');
+                    }
+                    
+                  },
+                  error : function(e){
+                    alert('회원가입이 실패하였습니다');
+                  }
+        })
+    }
+
+    
+}

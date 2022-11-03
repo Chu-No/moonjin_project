@@ -1,4 +1,5 @@
 /* @charset "utf-8"; */
+@import url("https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap");
 
 input::-ms-input-placeholder {color:#a8a8a8;}
 input::-webkit-input-placeholder {color:#a8a8a8;}
@@ -26,21 +27,21 @@ img {
     object-fit:cover;
 }
 body {
-    font-family: 'Nanum Gothic', '맑은 고딕', Helvetica, Arial, sans-serif;
+    font-family: 'Nanum Gothic', '留묒� 怨좊뵓', Helvetica, Arial, sans-serif;
     font-size: 14px;
     line-height: 20px;
     color: #676767;
-    border-top: 7px solid #7cc0cb; /*넓이 스타일 색상*/
+    border-top: 7px solid #7cc0cb; /*�볦씠 �ㅽ��� �됱긽*/
 }
 .noVisible {
     visibility: hidden;
-    /*position: static속성을 가지고 있지 않은 부모를 기준으로 움직인다.
-    만약 부모 중에 포지션이 relative, absolute, fixed인 태그없으면 body기준으로 오른쪽에 붙음*/
+    /*position: static�띿꽦�� 媛�吏�怨� �덉� �딆� 遺�紐⑤� 湲곗��쇰줈 ��吏곸씤��.
+    留뚯빟 遺�紐� 以묒뿉 �ъ��섏씠 relative, absolute, fixed�� �쒓렇�놁쑝硫� body湲곗��쇰줈 �ㅻⅨ履쎌뿉 遺숈쓬*/
     position: absolute; 
     font-size: 0;
     width: 0;
     height: 0;
-    line-height: 0; /*줄의 높이 지정*/
+    line-height: 0; /*以꾩쓽 �믪씠 吏���*/
     margin: 0;
     padding: 0;
     background: none;
@@ -50,11 +51,11 @@ body {
     height: 1px;
     width: 1px;
     margin: 0 -1px -1px 0; /*top, right, bottom, left*/
-    overflow: hidden; /*visible: 넘칠경우 콘텐츠 상자 밖으로, hidden: 넘치는부분 안보임, scroll: 넘치는 부분 스크롤이동으로 봄*/
+    overflow: hidden; /*visible: �섏튌寃쎌슦 肄섑뀗痢� �곸옄 諛뽰쑝濡�, hidden: �섏튂�붾�遺� �덈낫��, scroll: �섏튂�� 遺�遺� �ㅽ겕濡ㅼ씠�숈쑝濡� 遊�*/
     font-size: 0;
     line-height: 0;
 }
-/*사용자가 링크위에 마우스 올렸을때 / hover: 마우스올렸을때, active: 링크클릭하는순간, focus: 요소에 초점이 맞춰질때*/
+/*�ъ슜�먭� 留곹겕�꾩뿉 留덉슦�� �щ졇�꾨븣 / hover: 留덉슦�ㅼ삱�몄쓣��, active: 留곹겕�대┃�섎뒗�쒓컙, focus: �붿냼�� 珥덉젏�� 留욎떠吏덈븣*/
 #skipNav a:hover, #skipNav a:active, #skipNav a:focus {
     width: 100%; 
     height: auto; 
@@ -62,7 +63,7 @@ body {
     padding: 5px;
     font-size: 12px;
     line-height: 1;
-    text-decoration: none; /*글자에 선 디자인을 함 line-through: 글자 중간에 선, overline: 글자위에 선, underline:글자아래선*/
+    text-decoration: none; /*湲��먯뿉 �� �붿옄�몄쓣 �� line-through: 湲��� 以묎컙�� ��, overline: 湲��먯쐞�� ��, underline:湲��먯븘�섏꽑*/
     text-align: center;
 }
 #footer a {
@@ -77,20 +78,22 @@ body {
     width: 100%;
     margin: 0 auto;
 }
+
+
 #logo, #logo a {
     float: left;
 }
 #menu {
-    z-index: 999; /*z축 제일 앞으로 */
+    z-index: 999; /*z異� �쒖씪 �욎쑝濡� */
     float: right;
-    margin: 23px 0 0 0;
+    /* margin: 23px 0 0 0; */
 }
 #menu li {
     display: inline;
     margin: 0 0 0 20px;
 }
 #menu li a {
-    font-family: 'Yanone', 'Nanum Gothic', '맑은 고딕', Helvetica, Arial, sans-serif;
+    font-family: 'Yanone', 'Nanum Gothic', '留묒� 怨좊뵓', Helvetica, Arial, sans-serif;
 	font-size: 24px;
     color: #999;
     text-decoration: none;
@@ -100,10 +103,11 @@ body {
     content: "";
     clear: both;
 }
+
 #campaign {
     position: relative;
 }
-/*.caption 은 표 밑에 있는 설명란*/
+/*.caption �� �� 諛묒뿉 �덈뒗 �ㅻ챸��*/
 #campaign .caption {
     z-index: 500;
     position: absolute;
@@ -111,7 +115,7 @@ body {
     left: 0;
     padding: 20px;
     background: #7cc0cb;
-    background: rgba(124, 192, 203, 0.7); /*rgba(적색, 녹색, 청색, 투명도) 0~255 투명도는 0.0(투명)~1.0(불투명)*/
+    background: rgba(124, 192, 203, 0.7); /*rgba(�곸깋, �뱀깋, 泥�깋, �щ챸��) 0~255 �щ챸�꾨뒗 0.0(�щ챸)~1.0(遺덊닾紐�)*/
     color: #FFF;
     font-size: 22px;
     text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.25);
@@ -123,7 +127,7 @@ body {
     padding: 20px 0 15px;
     margin-top: 70px;
     background-color: #7cc0cb;
-    font-size: 0.9em; /*브라우저 창 크기에 상관없이 폰트크기가 변함, px은 고정된값*/
+    font-size: 0.9em; /*釉뚮씪�곗� 李� �ш린�� �곴��놁씠 �고듃�ш린媛� 蹂���, px�� 怨좎젙�쒓컪*/
     text-align: center;
     font-style: normal;
     color: #fff;
@@ -134,11 +138,11 @@ body {
     content: "";
     clear: both;
 }
-/*메뉴에 현재 문서 표시*/  
+/*硫붾돱�� �꾩옱 臾몄꽌 �쒖떆*/  
 #menu li.current a {
     color: #7cc0cb;
 }
-/*타이틀*/
+/*���댄�*/
 #contents h1 {
     color: #888888;
     font-size: 50px;
@@ -147,7 +151,7 @@ body {
     margin-bottom: 30px;
     text-transform: uppercase;
     text-shadow: 1px 1px 1px #cecece;
-    font-family: 'Yanone', 'Nanum Gothic', '맑은 고딕', Helvetica, Arial, sans-serif;
+    font-family: 'Yanone', 'Nanum Gothic', '留묒� 怨좊뵓', Helvetica, Arial, sans-serif;
 }
 /*aboutme*/
 .onethird {
@@ -164,7 +168,7 @@ h2 {
     line-height: 25px;
     margin-bottom: 15px;
 }
-/*추가 css 리셋*/
+/*異붽� css 由ъ뀑*/
 img, input, select, textarea, label {
     vertical-align: middle;
 }
@@ -306,3 +310,82 @@ button{
     bottom: 0;
 }
 
+.myButton {
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+	background-color:#ffffff;
+	border-radius:6px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	cursor:pointer;
+	color:#666666;
+	font-family:Arial;
+	font-size:16px;
+	font-weight:bold;
+	padding:11px 14px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+    margin-left : 5px
+}
+.myButton:hover {
+	background:linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+	background-color:#f6f6f6;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+/* The popup form - hidden by default */
+.form-popup {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    right: 15px;
+    border: 3px solid #f1f1f1;
+    z-index: 9;
+  }
+  
+  /* Add styles to the form container */
+  .form-container {
+    max-width: 300px;
+    padding: 10px;
+    background-color: white;
+  }
+  
+  /* Full-width input fields */
+  .form-container input[type=text], .form-container input[type=password] {
+    width: 90%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+  }
+  
+  /* When the inputs get focus, do something */
+  .form-container input[type=text]:focus, .form-container input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+  }
+  
+  /* Set a style for the submit/login button */
+  .form-container .btn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom:10px;
+    opacity: 0.8;
+  }
+  
+  /* Add a red background color to the cancel button */
+  .form-container .cancel {
+    background-color: red;
+  }
+  
+  /* Add some hover effects to buttons */
+  .form-container .btn:hover, .open-button:hover {
+    opacity: 1;
+  }
