@@ -7,6 +7,7 @@ let dbArr=[]
 let keyword=""
 //정규 표현식
 const passwordRules = /^[A-Z]?(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/;
+const cookies=document.cookie.split('=')[1]; // 쿠키 존재
 
 document.getElementById("loginbtn").addEventListener("click", openForm);
 document.getElementById("registerbtn").addEventListener("click", openForm);
@@ -59,7 +60,7 @@ function searchMovie(){
 
 function renderMovie(){
     let keyword = searchInput.value;
-    var search_keyword = {'keyword':keyword}
+    var search_keyword = {'keyword':keyword , 'cookie': cookies}
     $.ajax({
         //////content type 명시하지 않음
               type: "get",
@@ -84,7 +85,7 @@ function renderMovie(){
 
 function isBookMark(movieArr){
     const movieHtml = movieArr.map((movie) => {
-        if (dbArr.includes(movie.videoId)){
+        if (dbArr.includes(movie.videoId) && !(cookies)){
             return `
             <div class="movieCard" id=${movie.videoId}>
                 <iframe width="400" height="250" src="https://www.youtube.com/embed/${movie.videoId}" 
@@ -143,7 +144,7 @@ function addBookmark(selectedParentElement){
     const videoTitle = selectedParentElement.querySelector('.videoTitle').innerHTML
     const channelTitle = selectedParentElement.querySelector('.channelTitle').innerHTML
     
-    var youtubeData = {'videoId':videoId,'videoTitle':videoTitle,'channelTitle':channelTitle};
+    var youtubeData = {'videoId':videoId,'videoTitle':videoTitle,'channelTitle':channelTitle, 'cookie': cookies};
     $.ajax({
         //////content type 명시하지 않음
               type: "post",
@@ -168,7 +169,7 @@ function deleteBookmark(selectedParentElement){
     const videoTitle = selectedParentElement.querySelector('.videoTitle').innerHTML
     const channelTitle = selectedParentElement.querySelector('.channelTitle').innerHTML
     
-    var youtubeData = {'videoId':videoId,'videoTitle':videoTitle,'channelTitle':channelTitle};
+    var youtubeData = {'videoId':videoId,'videoTitle':videoTitle,'channelTitle':channelTitle, 'cookie': cookies};
     $.ajax({
         //////content type 명시하지 않음
               type: "post",

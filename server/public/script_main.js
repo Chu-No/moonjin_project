@@ -10,17 +10,19 @@ window.onload = function (){
     movieArr=[]
 };
 
+const cookies=document.cookie.split('=')[1]; // 쿠키 존재
 document.getElementById("loginbtn").addEventListener("click", openForm);
 document.getElementById("registerbtn").addEventListener("click", openForm);
 document.getElementById("close_button").addEventListener("click", closeForm);
 
 function searchMovie(){
+    var userData = {'cookie': cookies};
     $.ajax({
         //////content type 명시하지 않음
               type: "post",
               url : "http://localhost:8000/select/all",
               async: false,
-              data : 'search_keyword',
+              data : userData,
               success : function (data){
                 console.log(data)
                 $.each(data, function(i, item) {
@@ -85,7 +87,7 @@ function deleteBookmark(selectedParentElement){
     const videoTitle = selectedParentElement.querySelector('.videoTitle').innerHTML
     const channelTitle = selectedParentElement.querySelector('.channelTitle').innerHTML
     
-    var youtubeData = {'videoId':videoId,'videoTitle':videoTitle,'channelTitle':channelTitle};
+    var youtubeData = {'videoId':videoId,'videoTitle':videoTitle,'channelTitle':channelTitle, 'cookie': cookies};
     $.ajax({
         //////content type 명시하지 않음
               type: "post",

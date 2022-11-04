@@ -76,7 +76,8 @@ app.get('/drop', function(req, res) {
 });
 
 app.post('/insert', function(req, res) {
-  var query_txt = 'INSERT INTO youtube(video_id,video_title,channel) VALUES("'+req.body['videoId']+'","'+req.body['videoTitle']+'","'+req.body['channelTitle']+'")'
+  console.log(req.body)
+  var query_txt = 'INSERT INTO youtube(video_id,video_title,channel,id) VALUES("'+req.body['videoId']+'","'+req.body['videoTitle']+'","'+req.body['channelTitle']+'","'+session[req.body['cookie']].Id+'")'
   maria.query(query_txt, function(err, rows, fields) {
     if(!err) {
       res.send(rows); // responses send rows
@@ -88,7 +89,7 @@ app.post('/insert', function(req, res) {
 });
 
 app.post('/select/video_title', function(req, res) {
-  var query_txt = 'SELECT video_id FROM YOUTUBE WHERE video_title LIKE "%'+req.body['keyword']+'%"'
+  var query_txt = 'SELECT video_id FROM YOUTUBE WHERE video_title LIKE "%'+req.body['keyword']+'%" AND id ="' + session[req.body['cookie']].Id+'"'
   maria.query(query_txt, function(err, rows, fields) {
     if(!err) {
       res.send(rows); // responses send rows
@@ -100,19 +101,9 @@ app.post('/select/video_title', function(req, res) {
 });
 
 app.post('/select/all', function(req, res) {
-  var query_txt = 'SELECT * FROM YOUTUBE'
+  console.log(session[req.body['cookie']]);
+  var query_txt = 'SELECT * FROM YOUTUBE WHERE id ="' + session[req.body['cookie']].Id+'"';
   maria.query(query_txt, function(err, rows, fields) {
-    if(!err) {
-      res.send(rows); // responses send rows
-    } else {
-      console.log("err : " + err);
-      res.send(err);  // response send err
-    }
-  });
-});
-
-router.get('/update', function(req, res) {
-  maria.query('UPDATE DEPARTMENT SET NAME="UPD ENG" WHERE DEPART_CODE=5001', function(err, rows, fields) {
     if(!err) {
       res.send(rows); // responses send rows
     } else {
@@ -124,7 +115,7 @@ router.get('/update', function(req, res) {
 
 //유튜브 즐겨찾기 삭제
 app.post('/delete', function(req, res) {
-  var query_txt = 'DELETE FROM youtube WHERE video_id="'+req.body['videoId']+'"'
+  var query_txt = 'DELETE FROM youtube WHERE video_id="'+req.body['videoId']+'" AND id ="' + session[req.body['cookie']].Id+'"'
   maria.query(query_txt, function(err, rows, fields) {
     if(!err) {
       res.send(rows); // responses send rows
@@ -198,9 +189,14 @@ app.get('/user/logout', (req, res) => {
     delete session[privateKey];
     res.setHeader('Set-Cookie', 'connect.id=delete; Max-age=0; path=/');
     res.redirect('/');
-  } else {
-    res.redirect('/user/login?msg=로그인부터 하라니까요?!');
-  }
+  } 
+});
+
+app.post('/user/id', function(req, res) {
+  console.log(req.headers.cookie.split('='))
+  console.log(session)
+  console.log(session[req.headers.cookie.split('=')[1]].Id);
+  res.send(session[req.headers.cookie.split('=')[1]].Id);
 });
 
 module.exports = router;

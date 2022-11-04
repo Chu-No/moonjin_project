@@ -70,18 +70,31 @@
 </body>
 <script src="./script.js"></script>
 <script>
-    var cookies=document.cookie;
-	console.log(cookies)
+	var userid = ""
 	if (!cookies){
 		document.getElementById('registerbtn').style.display = 'inline-block'
 		document.getElementById('loginbtn').style.display = 'inline-block'
 		document.getElementById('logoutbtn').style.display = 'none'
 		document.getElementById('profile').style.display = 'none'
 	}else{
+		console.log(cookies)
+		$.ajax({
+        //////content type 명시하지 않음
+              type: "post",
+              url : "http://localhost:8000/user/id",
+              async: false,
+              data : cookies.split('='),
+              success : function (data){
+                console.log(data)
+				userid = data
+              },
+              error : function(e){
+              }
+    	})
 		document.getElementById('registerbtn').style.display = "none"
 		document.getElementById('loginbtn').style.display = "none"
 		document.getElementById('logoutbtn').style.display = 'inline-block'
-		document.getElementById('profile').innerHTML = "cookies"
+		document.getElementById('profile').innerHTML = userid
 		document.getElementById('profile').style.display = 'inline-block'
 	}
 </script>

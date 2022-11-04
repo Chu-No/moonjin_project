@@ -19,7 +19,7 @@
 	<a href="./mj_main.html">MoonJin's Webpage</a>
 </div>
 <hr class="hidden" />
-<form class="form-popup" id="LoginForm" action="/login" method="post">
+<form class="form-popup" id="LoginForm" action="/user/login" method="post">
 	<div class="form-container">
 	  <h1>Login</h1>
   
@@ -42,7 +42,7 @@
 			<a id="loginbtn" href="#" class="myButton">login</a>
             <a id="registerbtn" href="#" class="myButton">register</a>
 			<a id="profile" class="current" style=display:none;></a>
-			<a id="logoutbtn" href="/logout" class="myButton" style=display:none;>logout</a>
+			<a id="logoutbtn" href="/user/logout" class="myButton" style=display:none;>logout</a>
 		</ul>
 	</div>
     <hr class="hidden" />
@@ -60,18 +60,31 @@
 </div>
 </body>
 <script>
-	var cookies=document.cookie;
-	console.log(cookies)
+	var userid = ""
 	if (!cookies){
 		document.getElementById('registerbtn').style.display = 'inline-block'
 		document.getElementById('loginbtn').style.display = 'inline-block'
 		document.getElementById('logoutbtn').style.display = 'none'
 		document.getElementById('profile').style.display = 'none'
 	}else{
+		console.log(cookies)
+		$.ajax({
+        //////content type 명시하지 않음
+              type: "post",
+              url : "http://localhost:8000/user/id",
+              async: false,
+              data : cookies.split('='),
+              success : function (data){
+                console.log(data)
+				userid = data
+              },
+              error : function(e){
+              }
+    	})
 		document.getElementById('registerbtn').style.display = "none"
 		document.getElementById('loginbtn').style.display = "none"
 		document.getElementById('logoutbtn').style.display = 'inline-block'
-		document.getElementById('profile').innerHTML = "cookies"
+		document.getElementById('profile').innerHTML = userid
 		document.getElementById('profile').style.display = 'inline-block'
 	}
 </script>
